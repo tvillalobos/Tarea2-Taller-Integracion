@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from .models import Artist, Album, Song
 
-BASE_URL = 'http://127.0.0.1:8000/'
+BASE_URL = 'https://t2-tvillalobos.herokuapp.com/'
 
 # class NewSerializer(serializers.ModelSerializer):
 

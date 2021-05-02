@@ -8,8 +8,8 @@ from base64 import b64encode
 
 class Artist(models.Model):
     cid = models.TextField(unique=True)
-    name = models.TextField(default='Artista')
-    age = models.IntegerField(default=0)
+    name = models.TextField()
+    age = models.IntegerField()
 
     def save(self, *args, **kwargs):
         name_split = self.name
