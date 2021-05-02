@@ -44,6 +44,11 @@ class ArtistAlbumsViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
 
     def get_queryset(self):
+        try:
+            artist = Artist.objects.get(cid=self.kwargs.get('cid'))
+        except Artist.DoesNotExist:
+            raise Http404
+
         artist_cid = self.kwargs.get('cid')
         return self.queryset.filter(artist_id__cid=artist_cid)
 
@@ -54,6 +59,11 @@ class ArtistAlbumsViewSet(viewsets.ModelViewSet):
         serializer.save(artist_id=artist)
 
     def create(self, request, *args, **kwargs):
+        try:
+            artist = Artist.objects.get(cid=self.kwargs.get('cid'))
+        except Artist.DoesNotExist:
+            return Response(data={"error": "El artista no existe"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
         try:
             return super(ArtistAlbumsViewSet, self).create(request, *args, **kwargs)
 
@@ -79,6 +89,10 @@ class ArtistTracksViewSet(viewsets.ModelViewSet):
     #         return Response(serializer.data)
 
     def get_queryset(self):
+        try:
+            artist = Artist.objects.get(cid=self.kwargs.get('cid'))
+        except Artist.DoesNotExist:
+            raise Http404
         artist_id = self.kwargs.get('cid')
         artist = Artist.objects.get(cid=artist_id)
         data = []
@@ -130,17 +144,39 @@ class AlbumTracksViewSet(viewsets.ModelViewSet):
     #         return Response(serializer.data)
 
     def get_queryset(self):
+
+        try:
+            album = Album.objects.get(cid=self.kwargs.get('cid'))
+        except Album.DoesNotExist:
+            print("ENTRE ACAaAAAAAAAAAAAAAAA!")
+            raise Http404
+
         album_cid = self.kwargs.get('cid')
         return self.queryset.filter(album_id__cid=album_cid)
 
     def perform_create(self, serializer):
+
         
-        album = Album.objects.get(cid=self.kwargs.get('cid'))
-        print("albumAAAAAAAADSJSAJDJASJDASJADSJDSAJADSJA:",album)
+        try:
+            album = Album.objects.get(cid=self.kwargs.get('cid'))
+        except Album.DoesNotExist:
+            raise Http404
         serializer.save(album_id=album)
 
     def create(self, request, *args, **kwargs):
+
         try:
+            album = Album.objects.get(cid=self.kwargs.get('cid'))
+        except Album.DoesNotExist:
+            return Response(data={"error": "El album no existe"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+            
+        try:
+            album = Album.objects.get(cid=self.kwargs.get('cid'))
+        except Album.DoesNotExist:
+            raise Http404
+
+        try:
+
             return super(AlbumTracksViewSet, self).create(request, *args, **kwargs)
 
         except IntegrityError:
