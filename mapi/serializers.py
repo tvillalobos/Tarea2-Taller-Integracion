@@ -63,7 +63,7 @@ class AlbumSerializer(serializers.HyperlinkedModelSerializer):
     self = serializers.SerializerMethodField('add_self')
     artist = serializers.SerializerMethodField('add_artists')
     tracks = serializers.SerializerMethodField('add_tracks')
-    id = serializers.SerializerMethodField('add_id')
+    #id = serializers.SerializerMethodField('add_id')
 
 
     def add_id(self, a):
