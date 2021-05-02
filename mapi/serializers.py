@@ -61,7 +61,7 @@ class ArtistSerializer(serializers.HyperlinkedModelSerializer):
 class AlbumSerializer(serializers.HyperlinkedModelSerializer):
     
     self = serializers.SerializerMethodField('add_self')
-    artists = serializers.SerializerMethodField('add_artists')
+    artist = serializers.SerializerMethodField('add_artists')
     tracks = serializers.SerializerMethodField('add_tracks')
     id = serializers.SerializerMethodField('add_id')
 
@@ -80,7 +80,7 @@ class AlbumSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Album
-        fields = ('id', 'name', 'genre', 'tracks', 'artists', 'self')
+        fields = ('name', 'genre', 'tracks', 'artist', 'self')
 
 class SongSerializer(serializers.HyperlinkedModelSerializer):
     
